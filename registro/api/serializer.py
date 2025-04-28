@@ -14,3 +14,5 @@ class RegistroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registro
         fields = '__all__'
+        
+ 

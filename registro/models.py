@@ -1,6 +1,13 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
+def validar_correo_com(value):
+    if not value.endswith('.com'):
+        raise ValidationError(
+            'El correo debe terminar en .com',
+            code='correo_invalido'
+        )
 
 # Create your models here.
 class Registro(models.Model):
@@ -37,18 +44,10 @@ class Registro(models.Model):
     ]
     grado = models.CharField(max_length=50, choices=GRADO, default="grado1")
     ocupacion = models.CharField(
-        max_length=100, choices=OCUPACION, default="ocupacion1"
+        max_length=100, choices=OCUPACION, default="ocupacion1", 
     )
     titulo = models.CharField(max_length=100)
-    correo = models.EmailField(
-        validators=[
-            RegexValidator(
-                regex=r"\.com$",
-                message="El Correo debe ser finalizado en .com",
-                code="correo_invalido",
-            )
-        ]
-    )
+    correo = models.EmailField(validators=[validar_correo_com])
     password = models.CharField(max_length=20, blank=True, null=True)
 
 

@@ -41,6 +41,9 @@ class RegistroViewSet(viewsets.ModelViewSet):
             
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            logger.error(f"Error en create: {str(e)}")
+            # Registrar el error detallado
+            print(f"Error en create: {str(e)}")
+            import traceback
+            print(traceback.format_exc())
             return Response({"error": "Ha ocurrido un error interno"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
