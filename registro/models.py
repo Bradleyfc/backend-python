@@ -49,6 +49,8 @@ class Registro(models.Model):
             )
         ]
     )
+    password = models.CharField(max_length=20, blank=True, null=True)
+
 
     def __str__(self):
         return f"{self.nombre} - {self.get_ocupacion_display()}"

@@ -134,15 +134,17 @@ CORS_ALLOWED_ORIGINS =[
 ]
 
 # Configuraciones para el correo
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_HOST = 'smtp.gamil.com'
 #EMAIL_PORT = '587'
 #EMAIL_USE_TLS = True
 #EMAIL_HOST_USER = ''# aqui poner el correo
 #EMAIL_HOST_PASSWORD = ''# aqui se pone la contrasena de aplicacion de la pagina de la cuenta de gmail
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@cfbc.com'
-
+# usar variables de entorno para ocultar la contrasena
+#EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 # Opcion 2 Configuracion SMT segun Proovedor
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_HOST = 'smtp.elproovedor.com'
