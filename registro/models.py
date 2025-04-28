@@ -1,13 +1,32 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.exceptions import ValidationError
 
+# Función para validar carnet único (necesaria para las migraciones)
+def validar_carnet_unico(value):
+    # Implementación vacía para que las migraciones funcionen
+    pass
 
 # Create your models here.
 class Registro(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
     nacionalidad = models.CharField(max_length=100)
-    carnet = models.CharField(max_length=11)
+    carnet = models.CharField(
+        max_length=11, 
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'^.{11}$',
+                message="El carnet debe tener exactamente 11 caracteres.",
+                code="carnet_invalido"
+            )
+        ]
+    )
 
     SEXO = [
         ("M", "Masculino"),
